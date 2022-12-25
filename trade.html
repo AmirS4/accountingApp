@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade</title>
+    <link rel="stylesheet" href="adjustments/trades.css">
+    <link rel="stylesheet" href="adjustments/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <title>Trade</title>
+</head>
+<body>
+<header>
+    <ul class="header-menu d-flex justify-content-between">
+        <li class="list-unstyled">
+            <a href="index.html">Home</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="includes/customers.php">Customers</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="transactions.html">Transactions</a>
+        </li>
+    </ul>
+</header>
+<h2>Sell Price : 30,156 T</h2>
+<h2>Buy Price : 32,167 T</h2> <br>
+<p id="message" class="text-danger"></p>
+<form method="post" class="first" action="includes/trade.php">
+    <label for="customerID"></label>
+    <input type="number" id="customerID" name="customerID">
+    <label for="customer">Customer</label>
+    <input type="text" id="customer" name="customer"><br>
+    <fieldset id="type">
+        <legend>Type</legend>
+        <label>
+            <input id="buy" class="type" type="radio" name="type" value="1">
+            Buy
+        </label>
+        <br>
+        <label>
+            <input id="sell" class="type" type="radio" name="type" value="2">
+            Sell
+        </label>
+    </fieldset>
+    <label for="amount">Amount</label>
+    <input type="text" id="amount" name="amount">
+    <label class="d-flex align-items-baseline">
+        <h2>Total :</h2>
+        <input id="total" name="total">
+        <p>Toman</p>
+    </label> <br>
+    <a class="submit">FinalPrice</a>
+    <label for="send"></label>
+    <input id="send" class="send-btn" type="submit" name="submit" disabled="disabled"
+           value="Submit">
+</form>
+
+<script>
+    $(document).ready(function () {
+        let ignoreClickOnMeElement = $('#customer');
+        $(ignoreClickOnMeElement).click(function () {
+            $('#type').css('margin-top', '40px')
+
+            $(ignoreClickOnMeElement).click(function (e) {
+                e.stopPropagation();
+            })
+        });
+        Insert_record();
+        $("#customer").autocomplete({
+            source: "includes/dropDown.php"
+        });
+        Get_ID();
+        Calculate();
+        js_number_format();
+    })
+
+    // function Auto_complete() {
+    //     $("#customer").autocomplete({
+    //         source: "includes/dropDown.php"
+    //     });
+    // }
+
+    function Get_ID() {
+        $('body').on('click', '.ui-menu-item', function () {
+            let customer = $('#customer').val();
+            $.ajax({
+                url: 'http://localhost/accounting/includes/getCustomerID.php',
+                method: 'get',
+                data: {customer: customer},
+                success: function (data) {
+                    document.getElementById("send").disabled = false;
+                    $('#customerID').val(data);
+                }
+            })
+        });
+    }
+
+    function Insert_record() {
+        $('.first').on('submit', function (e) {
+            e.preventDefault();
+            const customerID = $('#customerID').val();
+            const type = $('.type:checked').val();
+            const amount = $('#amount').val();
+            const total = $('#total').val();
+            const customer = $('#customer').val();
+
+            if (customerID == "" || total == "") {
+                $('#message').html('Please Fill in the Blanks');
+            } else {
+                $.ajax({
+                    url: 'http://localhost/accounting/includes/trade.php',
+                    method: 'post',
+                    data: {customerID: customerID, type: type, amount: amount, total: total, customer: customer},
+                    success: function (data) {
+                        $('#message').html('SAVED');
+                        console.log(data)
+                    }
+                })
+            }
+        });
+    }
+
+    // function Drop_down() {
+    //     let ignoreClickOnMeElement = $('#customer');
+    //     $(ignoreClickOnMeElement).click(function () {
+    //         $('#type').css('margin-top', '40px')
+    //
+    //         $(ignoreClickOnMeElement).click(function (e) {
+    //             e.stopPropagation();
+    //         })
+    //     })
+    // }
+
+    function Calculate() {
+        $("a").click(function () {
+            $("input[id='buy']:checked").each(function () {
+                var buy = 32167;
+                var amount = $("#amount").val();
+                var numb = buy * amount;
+                document.getElementById("total").value = js_number_format(numb);
+            });
+            $("input[id='sell']:checked").each(function () {
+                var sell = 30156;
+                var amount = $("#amount").val();
+                var numb = sell * amount;
+                document.getElementById("total").value = js_number_format(numb);
+            });
+        });
+    }
+
+    function js_number_format(num) {
+        var str = num.toString();
+        if (str && str.length > 3) {
+            str = str.replace(/(\d)(?=(\d{3})+$)/g, "$1,");
+        }
+        return str;
+    }
+</script>
+
+
+</body>
+</html>

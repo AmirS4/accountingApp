@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade</title>
+    <link rel="stylesheet" href="adjustments/trades.css">
+    <link rel="stylesheet" href="adjustments/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <title>Add Customer</title>
+</head>
+
+<body>
+<header>
+    <ul class="header-menu d-flex justify-content-between">
+        <li class="list-unstyled">
+            <a href="index.html">Home</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="trade.html">Trade</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="includes/customers.php">Customer</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="transactions.html">Transactions</a>
+        </li>
+    </ul>
+</header>
+<main class="d-flex justify-content-center align-items-center">
+    <div class="box">
+        <h2>New Customer</h2>
+        <form method="post" action="includes/add-customers.php">
+            <label for="name">Name: </label>
+            <br>
+            <input type="text" id="name" name="name">
+            <br>
+            <label for="number">Phone Number: </label>
+            <br>
+            <input type="text" id="number" name="number">
+            <br>
+            <label for="status">Status</label>
+            <br>
+            <select id="status" name="status">
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Banned</option>
+            </select>
+            <br>
+            <div class="text-center">
+                <label for="submit"></label>
+                <input id="submit" class="submit-btn" type="submit" name="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>

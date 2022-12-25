@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade</title>
+    <link rel="stylesheet" href="adjustments/trades.css">
+    <link rel="stylesheet" href="adjustments/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <title>TransActions</title>
+</head>
+<body>
+<header>
+    <ul class="header-menu d-flex justify-content-between">
+        <li class="list-unstyled">
+            <a href="trade.html">Trade</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="includes/customers.php">Customer</a>
+        </li>
+        <li class="list-unstyled">
+            <a href="index.html">Home</a>
+        </li>
+    </ul>
+</header>
+<button id="showData">Show Transactions</button>
+<p id="msg"></p>
+<div id="table-container"></div>
+
+<script>
+    $(document).ready(function () {
+        view_transaction();
+    })
+
+    function view_transaction() {
+        $(document).on('click', '#showData', function (e){
+            $.ajax({
+                url: 'includes/transactions.php',
+                method: 'GET',
+                dataType: 'html',
+                success:function (data) {
+                    $('#table-container').html(data);
+                }
+            })
+        })
+    }
+
+</script>
+</body>
+</html>
