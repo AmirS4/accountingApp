@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin:0;
+    padding:0;
+}
+#total {
+    margin:0 10px;
+}
+.submit {
+    background: #161f27;
+    border-radius: 8px;
+    text-decoration: none;
+    color:#fff;
+    padding: 15px 35px;
+}
+.submit:hover {
+    color:#fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+#total {
+    width: 89px;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.send-btn {
+    margin-top: 20px;
+}
+
+#customerID {
+    display: none;
+}
+
+ul.ui-autocomplete {
+    color: rgb(65, 173, 255); !important;
+    max-height: 70px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    list-style-type: none;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
